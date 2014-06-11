@@ -1,0 +1,314 @@
+using Kbus.Common;
+using System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
+
+
+// 基本頁面項目範本已記錄在 http://go.microsoft.com/fwlink/?LinkId=234237
+
+namespace Kbus
+{
+    /// <summary>
+    /// 提供大部分應用程式共通特性的基本頁面。
+    /// </summary>
+    
+    public sealed partial class MainPage : Page
+    {
+
+        private NavigationHelper navigationHelper;
+        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+
+       
+        /// <summary>
+        /// 此項可能變更為強類型檢視模型。
+        /// </summary>
+        public ObservableDictionary DefaultViewModel
+        {
+            get { return this.defaultViewModel; }
+        }
+
+        /// <summary>
+        /// NavigationHelper 是用在每個頁面上協助巡覽及
+        /// 處理程序生命週期管理
+        /// </summary>
+        public NavigationHelper NavigationHelper
+        {
+            get { return this.navigationHelper; }
+        }
+
+
+        public MainPage()
+        {
+            this.InitializeComponent();
+            this.navigationHelper = new NavigationHelper(this);
+            this.navigationHelper.LoadState += navigationHelper_LoadState;
+            this.navigationHelper.SaveState += navigationHelper_SaveState;
+        }
+
+        /// <summary>
+        /// 巡覽期間以傳遞的內容填入頁面。從之前的工作階段
+        /// 重新建立頁面時，也會提供儲存的狀態。
+        /// </summary>
+        /// <param name="sender">
+        /// 事件之來源；通常是<see cref="NavigationHelper"/>
+        /// </param>
+        /// <param name="e">提供傳遞出去之巡覽參數之事件資料
+        /// <see cref="Frame.Navigate(Type, Object)"/> 初始要求本頁面時及
+        /// 這個頁面在先前的工作階段期間保留的狀態字典
+        /// 工作階段。第一次瀏覽頁面時，狀態是 null。</param>
+        private void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// 在應用程式暫停或從巡覽快取中捨棄頁面時，
+        /// 保留與這個頁面關聯的狀態。值必須符合
+        /// <see cref="SuspensionManager.SessionState"/> 的序列化需求。
+        /// </summary>
+        /// <param name="sender">事件之來源；通常是<see cref="NavigationHelper"/></param>
+        /// <param name="e">事件資料，此資料提供即將以可序列化狀態填入的空白字典
+        ///。</param>
+        private void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+        }
+
+        #region NavigationHelper 註冊
+
+        /// 本區段中提供的方法只用來允許
+        /// NavigationHelper 可回應頁面的巡覽方法。
+        /// 
+        /// 頁面專屬邏輯應該放在事件處理常式中
+        /// <see cref="GridCS.Common.NavigationHelper.LoadState"/>
+        /// 和 <see cref="GridCS.Common.NavigationHelper.SaveState"/>。
+        /// 巡覽參數可用於 LoadState 方法
+        /// 除了先前的工作階段期間保留的頁面狀態。
+        int k = 1;
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            navigationHelper.OnNavigatedTo(e);
+            string[] routeArray = {"0北","0南","11","15","168環西","168環東","16","205中華","214","217","218"
+ ,"245","248","24A","25","26","261","28","29A","3","3(繞文信路)","30","301","33","36","37","38A","38B","38C","38D","39","5","50五福","52","52-不延駛市議會","53A","53B","56","56區間","6","60覺民","62","69A","69B","7","70三多","72"
+ ,"73","76","77","8001","8002","8005","8006","8008","8010","8011","8012","8013","8015","8017","8018","8019","8020","8021","8023","8025","8026","8027","8028","8029","8031","8032","8033","8035","8038","8040","8041","8042","8043","8046","8048","8049"
+ ,"81","82","83","8501","8501(延駛佛光山)","8502","8503","8504","8505","8506","87","88建國","88區間","90民族","92自由","96","97","98","98(延駛筆秀里)","99","大坪頂社區巴士","大岡山假日觀光公車","大林蒲社區巴士","大樹祈福線","哈瑪星文化公車"
+ ,"紅1","紅10A","紅10B","紅11","紅12A","紅12B","紅16","紅18","紅2","紅21","紅27","紅28九如","紅28九如(繞中都濕地公園)","紅29","紅3","紅3(去不繞大林蒲)","紅30建工","紅30建工(繞澄清湖)","紅32A","紅32B","紅33明誠","紅35","紅36","紅36繞駛文信路"
+ ,"紅5","紅50","紅51A","紅51B","紅51C","紅52","紅53A","紅53B","紅53C","紅56A","紅56B","紅56C","紅58A","紅58B","紅58C","紅6","紅60A","紅60B","紅68A","紅68A延駛","紅68B","紅68C","紅69A","紅69B","紅69C","紅70","紅71A","紅71B","紅71B(不延駛)","紅72A"
+ ,"紅72B","紅72C","紅73","紅7A","紅7B","紅7C","紅8","紅9","紅9B(延駛旗津漁港)","紅毛港文化公車(小港輪渡站)","紅毛港文化公車(紅毛港文化園區)","就醫公車H11","就醫公車H12","就醫公車H21","就醫公車H22","就醫公車H31","旗山-內門觀光公車(週六行駛)","旗山-六龜觀光公車(週日及假日行駛)"
+ ,"旗山-甲仙觀光公車(週日及假日行駛)","旗山-美濃觀光公車(週六行駛)","旗山國道快捷公車 高鐵左營站－旗山轉運站","旗美國道快捷公車 高鐵左營站－美濃站","鳳山文化公車","鳳鼻頭社區巴士","橘1","橘10","橘12鳳青","橘16","橘1B","橘20A","橘20B","橘20C","橘20D","橘20E","橘21A","橘21B","橘22"
+ ,"橘7A","橘7B","橘8","橘9","舊城文化公車"}; 
+            //上列routeArray為「路線名稱」的存放陣列，為字串型態
+            //我們將高雄市區有開的公車路線都查出來，並先以陣列存放，以作為待會需要的連結使用
+            if (k != 0)
+            {
+                for (int i = 0; i < routeArray.Length; i++)
+                {
+                    comboBusLine.Items.Add(routeArray[i]);
+                    //將「路線名稱」放入Combobox選單內，以便供使用者選取
+                }
+                comboBusLine.SelectedIndex = 0;
+                //Combobox的初始值為0，為選到第一個路線「0北」的狀態
+            }            
+           
+
+
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            navigationHelper.OnNavigatedFrom(e);
+        }
+
+        #endregion
+
+        string[] routeArray = { "0北","0南","11","15","168環西","168環東","16","205中華","214","217","218"
+ ,"245","248","24A","25","26","261","28","29A","3","3(繞文信路)","30","301","33","36","37","38A","38B","38C","38D","39","5","50五福","52","52-不延駛市議會","53A","53B","56","56區間","6","60覺民","62","69A","69B","7","70三多","72"
+ ,"73","76","77","8001","8002","8005","8006","8008","8010","8011","8012","8013","8015","8017","8018","8019","8020","8021","8023","8025","8026","8027","8028","8029","8031","8032","8033","8035","8038","8040","8041","8042","8043","8046","8048","8049"
+ ,"81","82","83","8501","8501(延駛佛光山)","8502","8503","8504","8505","8506","87","88建國","88區間","90民族","92自由","96","97","98","98(延駛筆秀里)","99","大坪頂社區巴士","大岡山假日觀光公車","大林蒲社區巴士","大樹祈福線","哈瑪星文化公車"
+ ,"紅1","紅10A","紅10B","紅11","紅12A","紅12B","紅16","紅18","紅2","紅21","紅27","紅28九如","紅28九如(繞中都濕地公園)","紅29","紅3","紅3(去不繞大林蒲)","紅30建工","紅30建工(繞澄清湖)","紅32A","紅32B","紅33明誠","紅35","紅36","紅36繞駛文信路"
+ ,"紅5","紅50","紅51A","紅51B","紅51C","紅52","紅53A","紅53B","紅53C","紅56A","紅56B","紅56C","紅58A","紅58B","紅58C","紅6","紅60A","紅60B","紅68A","紅68A延駛","紅68B","紅68C","紅69A","紅69B","紅69C","紅70","紅71A","紅71B","紅71B(不延駛)","紅72A"
+ ,"紅72B","紅72C","紅73","紅7A","紅7B","紅7C","紅8","紅9","紅9B(延駛旗津漁港)","紅毛港文化公車(小港輪渡站)","紅毛港文化公車(紅毛港文化園區)","就醫公車H11","就醫公車H12","就醫公車H21","就醫公車H22","就醫公車H31","旗山-內門觀光公車(週六行駛)","旗山-六龜觀光公車(週日及假日行駛)"
+ ,"旗山-甲仙觀光公車(週日及假日行駛)","旗山-美濃觀光公車(週六行駛)","旗山國道快捷公車 高鐵左營站－旗山轉運站","旗美國道快捷公車 高鐵左營站－美濃站","鳳山文化公車","鳳鼻頭社區巴士","橘1","橘10","橘12鳳青","橘16","橘1B","橘20A","橘20B","橘20C","橘20D","橘20E","橘21A","橘21B","橘22"
+ ,"橘7A","橘7B","橘8","橘9","舊城文化公車"};
+        string[] routeArray2 = { "143","142","11","15","206","207","16","114","214","217","218","245","248","24","25","26","261","28","29"
+ ,"3","32","30","301","33","36","37","38","381","382","383","39","5","50","52","10521","531","532","56","561","6","60","62","69","691","7","70","72","73","76","77","8001","8002","8005","8006","8008","8010","8011","8012","8013","8015","8017"
+ ,"8018","8019","8020","8021","8023","8025","8026","8027","8028","8029","8031","8032","8033","8035","8038","8051","8041","8042","8043","8046","8048","8049","81","82","83","8501","8507","8502","8503","8504","8505","8506","87","122","1221"
+ ,"90","92","96","97","981","98","99","145","683","147","682","251","801","810","8101","811","812","8121","816","818","179","220","827","8281","828","829","211","2111","830","8301","832","8321","833","210","836","8361","213"
+ ,"850","851","8511","8514","852","853","8531","8532","856","8561","8562","8581","858","8582","806","860","8601","868","8682","8681","8683","869","8691","8692","253","254","267","8716","872","8721","8722","221","807","8071","8072","362"
+ ,"116","1161","149","150","111","112","85","86","131","6011","608","607","602","604","603","700","146","901","910","912","916","9011","920","9201","9202","9203","9204","921","9211","922","160","9701","250","9","252"};
+           //上述routeArray與routeArray2兩個陣列為存放「路線名稱」與「公車編號」的字串型態陣列
+           //一個「路線名稱」對應一台「公車編號」，成為查詢動態的主要元素
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            webView1.Visibility= Visibility.Visible;
+            webView2.Visibility = Visibility.Visible;
+            Image1.Visibility = Visibility.Collapsed;
+            TB1.Visibility = Visibility.Visible;
+            TB2.Visibility = Visibility.Visible;
+            //因為我們「公車動態」與「路線圖」是在同一頁，
+            //所以button1_Click時，是表示查詢「公車動態」
+            //就必須將去返程的「Table」&「View」顯示出來，
+            //並將路線圖的Image隱藏掉
+
+            string strSelectedBus = comboBusLine.SelectedValue.ToString();
+            //將Combobox所選到的「值」轉換成String型態(也就是路線名稱)
+            for(int i=0;i<routeArray.Length;i++)
+            {
+                if (strSelectedBus == routeArray[i]) 
+            {
+                    string n = routeArray2[i];
+            //「路線名稱(Array1)」對應到「公車編號(Array2)」的第i筆
+            //就將Array2的第i筆資料擷取出來，也就是公車編號
+
+                        webView1.Source =
+          new Uri(Uri.EscapeUriString("http://122.146.229.210/bus/pda/businfo.aspx?Routeid=" + n + "&GO_OR_BACK=1&Line=All&lang=Cht"
+          ));
+                        webView2.Source =
+         new Uri(Uri.EscapeUriString("http://122.146.229.210/bus/pda/businfo.aspx?Routeid=" + n + "&GO_OR_BACK=2&Line=All&lang=Cht"
+         ));
+            //我們得知，高雄市的公車動態是這段網址再加上「公車編號」，也就是剛剛擷取出來Array2的值
+            //如此一來便能對應到正確的公車動態，View1為去程、View2為返程
+            }
+            }
+         }
+
+
+
+
+       private void photopage_button(object sender, RoutedEventArgs e)
+        {
+           
+           string strSelectedBus = comboBusLine.SelectedValue.ToString();
+           webView1.Visibility = Visibility.Collapsed;
+           webView2.Visibility = Visibility.Collapsed;
+           TB1.Visibility = Visibility.Collapsed;
+           TB2.Visibility = Visibility.Collapsed;
+           Image1.Visibility = Visibility.Visible;
+           //剛剛說過，因為我們「公車動態」與「路線圖」是在同一頁，
+           //所以現在Photo_click時，是表示要顯示「路線圖」
+           //就必須將View、去返程Table都隱藏
+           //只需顯示Image
+
+           for(int i=0;i<routeArray.Length;i++)
+            {
+                if (strSelectedBus == routeArray[i])
+                {
+                        string n = routeArray2[i];
+                       
+                    //也是一樣，兩個Array相對應，並擷取出Array2的值
+                        BitmapImage mbu = new BitmapImage();
+                        mbu.UriSource = new Uri("ms-appx:///Assets/BUSR/" + routeArray2[i] + ".jpg");
+                        Image1.Source = mbu;
+                        Image1.Width = 600;
+                        Image1.Height = 500;
+                    //將值代入BitmapImage，並顯示相對路線的路線圖
+                    //並設定路線圖的高、寬
+
+                }
+               
+
+
+                
+                
+            }
+         }
+
+        
+
+       private void comboBusLine_SelectionChanged(object sender, SelectionChangedEventArgs e)
+       {
+
+       }
+
+       private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+       {
+
+       }
+
+       private void TB2_SelectionChanged(object sender, RoutedEventArgs e)
+       {
+
+       }
+
+       private void favorite_button(object sender, RoutedEventArgs e)
+       {
+           string strBusToAdd = comboBusLine.SelectedItem.ToString();
+           if (strBusToAdd.Length > 0 && !comboBusLine2.Items.Contains(strBusToAdd))
+           {
+               this.comboBusLine2.Items.Add(strBusToAdd);
+               
+           }
+            //我的最愛按鈕功能設定，將選到的值加入到comboBusLine2
+       }
+
+       private void delete_button(object sender, RoutedEventArgs e)
+       {
+          
+            comboBusLine2.Items.Remove(comboBusLine2.SelectedItem);
+          //刪除我的最愛的特定值
+       }
+
+       private void buttonfavor_Click(object sender, RoutedEventArgs e)
+       {
+           if (comboBusLine2.SelectedValue != null)
+           {
+               webView1.Visibility = Visibility.Visible;
+               webView2.Visibility = Visibility.Visible;
+               Image1.Visibility = Visibility.Collapsed;
+               TB1.Visibility = Visibility.Visible;
+               TB2.Visibility = Visibility.Visible;
+
+               string strSelectedBus = comboBusLine2.SelectedValue.ToString();
+
+
+               for (int i = 0; i < routeArray.Length; i++)
+               {
+                   if (strSelectedBus == routeArray[i])
+                   {
+                       string n = routeArray2[i];
+
+                       webView1.Source =
+         new Uri(Uri.EscapeUriString("http://122.146.229.210/bus/pda/businfo.aspx?Routeid=" + n + "&GO_OR_BACK=1&Line=All&lang=Cht"
+         ));
+                       webView2.Source =
+        new Uri(Uri.EscapeUriString("http://122.146.229.210/bus/pda/businfo.aspx?Routeid=" + n + "&GO_OR_BACK=2&Line=All&lang=Cht"
+        ));
+                       //與上述「公車動態」的功能一樣！只不過改成針對我的最愛的combobox做顯示
+                   }
+               }
+           }
+       }
+
+       private void photovor_button(object sender, RoutedEventArgs e)
+       {
+           if (comboBusLine2.SelectedValue != null)
+           {
+               string strSelectedBus = comboBusLine2.SelectedValue.ToString();
+               webView1.Visibility = Visibility.Collapsed;
+               webView2.Visibility = Visibility.Collapsed;
+               TB1.Visibility = Visibility.Collapsed;
+               TB2.Visibility = Visibility.Collapsed;
+               Image1.Visibility = Visibility.Visible;
+
+
+               for (int i = 0; i < routeArray.Length; i++)
+               {
+                   if (strSelectedBus == routeArray[i])
+                   {
+                       string n = routeArray2[i];
+
+
+                       BitmapImage mbu = new BitmapImage();
+                       mbu.UriSource = new Uri("ms-appx:///Assets/BUSR/" + routeArray2[i] + ".jpg");
+                       Image1.Source = mbu;
+                       Image1.Width = 600;
+                       Image1.Height = 500;
+
+                   }
+                   //與上述「路線圖」的功能一樣！只不過改成針對我的最愛的combobox做顯示
+               }
+
+           }
+       }
+    }
+}
